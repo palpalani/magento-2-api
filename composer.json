@@ -2,6 +2,7 @@
     "name": "jethva/magento2-api-client",
     "description": "Magento 2 api client",
     "type": "library",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "RestApi\\": "Source/"
