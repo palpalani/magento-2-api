@@ -1,6 +1,7 @@
 <?php
 
 namespace Experius\Magento2ApiClient\Service;
+
 /**
  * Class RestApi
  *
