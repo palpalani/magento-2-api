@@ -7,5 +7,7 @@
             "RestApi\\": "Source/"
         }
     },
-    "require": {}
+    "require": {},
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
