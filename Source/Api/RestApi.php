@@ -86,12 +86,6 @@ class RestApi
      */
     protected function getToken()
     {
-//        if (!$this->token) {
-//            $data = array("username" => $this->getUsername(), "password" => $this->getPassword());
-//            if ($token = $this->call('integration/admin/token', $data, 'POST')) {
-//                $this->token = $token;
-//            }
-//        }
         $this->token = $this->getApiKey();
         return $this->token;
     }
