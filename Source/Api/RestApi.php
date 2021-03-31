@@ -1,6 +1,7 @@
 <?php
 
 namespace Api;
+
 class RestApi
 {
     /**
