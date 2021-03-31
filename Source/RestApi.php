@@ -1,15 +1,7 @@
 <?php
 
-namespace Source;
-
-/**
- * Class RestApi
- *
- * @package Source
- */
 class RestApi
 {
-
 
     /**
      * @var
