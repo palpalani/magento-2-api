@@ -1,11 +1,11 @@
 <?php
 
-namespace Jethva\Magento2ApiClient\Source;
+namespace Source;
 
 /**
  * Class RestApi
  *
- * @package Experius\Magento2ApiClient\Service
+ * @package Source
  */
 class RestApi
 {
