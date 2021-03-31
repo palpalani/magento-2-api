@@ -1,7 +1,11 @@
 <?php
 
-namespace Api;
-
+namespace Experius\Magento2ApiClient\Service;
+/**
+ * Class RestApi
+ *
+ * @package Experius\Magento2ApiClient\Service
+ */
 class RestApi
 {
     /**

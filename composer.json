@@ -1,14 +1,13 @@
 {
     "name": "jethva/magento2-api-client",
-    "description": "Magento 2 api client",
+    "description": "",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "RestApi\\": "Source/"
+            "Experius\\Magento2ApiClient\\": ""
         }
     },
     "require": {},
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "minimum-stability": "dev"
 }
