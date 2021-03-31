@@ -2,7 +2,6 @@
 
 class RestApi
 {
-
     /**
      * @var
      */
