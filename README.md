@@ -6,6 +6,8 @@
 
 This is a simple PHP SDK lib to easily create Rest API.
 
+`Note`: From the version `1.2` and above the Namespace was changed.
+
 ## Installation
 
 You can install the package via composer:
