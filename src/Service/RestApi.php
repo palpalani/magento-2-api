@@ -46,7 +46,6 @@ class RestApi
      */
     protected $apiKey;
 
-
     /**
      * @throws \Exception
      */
@@ -82,6 +81,7 @@ class RestApi
         if ($this->getStoreCode() != '') {
             $storeCode = $this->getStoreCode() . '/';
         }
+
         return str_replace('%storecode/', $storeCode, $this->url);
     }
 
@@ -92,6 +92,7 @@ class RestApi
     protected function getToken()
     {
         $this->token = $this->getApiKey();
+
         return $this->token;
     }
 
@@ -106,6 +107,7 @@ class RestApi
             $headers['realtime-stock'] = 'Disable-RealtimeStock: true';
         }
         $headers = array_merge($headers, $this->extraHeaders);
+
         return $headers;
     }
 
@@ -118,7 +120,7 @@ class RestApi
      * @return bool|mixed
      * @throws \Exception
      */
-    public function call($url, $dataArray = array(), $postType = "GET", $storeCode = 'all', $extraHeaders = [])
+    public function call($url, $dataArray = [], $postType = "GET", $storeCode = 'all', $extraHeaders = [])
     {
         $this->extraHeaders = $extraHeaders;
         $this->storeCode = $storeCode;
@@ -129,15 +131,19 @@ class RestApi
         switch ($postType) {
             case 'GET':
                 $this->buildGetCall($handle, $dataArray);
+
                 break;
             case 'POST':
                 $this->buildPostCall($handle, $dataArray);
+
                 break;
             case 'PUT':
                 $this->buildPutCall($handle, $dataArray);
+
                 break;
             case 'DELETE':
                 $this->buildDeleteCall($handle, $dataArray);
+
                 break;
         }
         curl_setopt($handle, CURLOPT_HTTPHEADER, $this->headers);
@@ -151,7 +157,7 @@ class RestApi
         $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
         curl_close($handle);
 
-        $response = array('response' => $response, 'code' => $code);
+        $response = ['response' => $response, 'code' => $code];
         $code = $response['code'];
         $response = $response['response'];
 
@@ -166,13 +172,15 @@ class RestApi
                     $parameters = (is_object($decodedResponse->parameters)) ? json_encode($decodedResponse->parameters) : $decodedResponse->parameters;
                     $exception = "{$code} - Error making request to server: {$decodedResponse->message} - {$parameters}";
                 }
+
                 throw new \Exception($exception, $code);
             }
+
             throw new \Exception($code . " - Error making request to server:\n" . $response, $code);
         }
+
         throw new \Exception($code . " - Error making request to server no valid response:\n" . $response, $code);
     }
-
 
     /**
      * @return bool
@@ -180,19 +188,20 @@ class RestApi
      */
     protected function validateConfig()
     {
-        $missingConfig = array();
-        if (!$this->getApiKey()) {
+        $missingConfig = [];
+        if (! $this->getApiKey()) {
             $missingConfig[] = 'apikey';
-        } elseif (!$this->getUrl()) {
+        } elseif (! $this->getUrl()) {
             $missingConfig[] = 'url';
         }
-        if (!empty($missingConfig)) {
+        if (! empty($missingConfig)) {
             $missingConfigString = implode(', ', $missingConfig);
+
             throw new \Exception("One or more config values are missing: {$missingConfigString}");
         }
+
         return true;
     }
-
 
     /**
      * @param $handle
@@ -213,6 +222,7 @@ class RestApi
             case JSON_ERROR_UTF8:
                 $dataArray = $this->utf8ize($dataArray);
                 $dataJson = json_encode($dataArray);
+
                 break;
         }
         curl_setopt($handle, CURLOPT_POSTFIELDS, $dataJson);
@@ -247,7 +257,7 @@ class RestApi
      */
     protected function buildGetCall($handle, $dataArray)
     {
-        if (!empty($dataArray)) {
+        if (! empty($dataArray)) {
             $urlParameters = http_build_query($dataArray);
             $this->apiCallUrl .= '?' . $urlParameters;
         }
@@ -270,6 +280,7 @@ class RestApi
         } elseif (is_string($mixed)) {
             return utf8_encode($mixed);
         }
+
         return $mixed;
     }
 
@@ -280,6 +291,7 @@ class RestApi
     public function setUrl($url)
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -290,6 +302,7 @@ class RestApi
     public function setApiKey($apiKey)
     {
         $this->apiKey = $apiKey;
+
         return $this;
     }
 
@@ -308,6 +321,7 @@ class RestApi
     public function setUsername($username)
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -326,6 +340,7 @@ class RestApi
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -336,5 +351,4 @@ class RestApi
     {
         return $this->password;
     }
-
 }
