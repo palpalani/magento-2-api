@@ -49,7 +49,7 @@ class RestApi
     /**
      * @throws \Exception
      */
-    public function init()
+    public function init(): void
     {
         if ($this->validateConfig()) {
             $this->getToken();
@@ -59,7 +59,7 @@ class RestApi
     /**
      * @return string
      */
-    public function getStoreCode()
+    public function getStoreCode(): string
     {
         return $this->storeCode;
     }
@@ -67,18 +67,18 @@ class RestApi
     /**
      * @param $storeCode
      */
-    public function setStoreCode($storeCode)
+    public function setStoreCode($storeCode): void
     {
         $this->storeCode = $storeCode;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         $storeCode = '';
-        if ($this->getStoreCode() != '') {
+        if ($this->getStoreCode() !== '') {
             $storeCode = $this->getStoreCode() . '/';
         }
 
@@ -106,9 +106,8 @@ class RestApi
             $headers[] = 'Authorization: Bearer ' . $this->token;
             $headers['realtime-stock'] = 'Disable-RealtimeStock: true';
         }
-        $headers = array_merge($headers, $this->extraHeaders);
 
-        return $headers;
+        return array_merge($headers, $this->extraHeaders);
     }
 
     /**
@@ -161,12 +160,16 @@ class RestApi
         $code = $response['code'];
         $response = $response['response'];
 
-        if ($code == '200') {
-            return json_decode($response);
-        } elseif ($code == '202') {
+        if ((int) $code === 200) {
+            return json_decode($response, true);
+        }
+
+        if ((int) $code === 202) {
             return true;
-        } elseif ((int)$code >= 300) {
-            if ($decodedResponse = json_decode($response)) {
+        }
+
+        if ((int)$code >= 300) {
+            if ($decodedResponse = json_decode($response, false)) {
                 $exception = $code . " - Error making request to server: " . $decodedResponse->message;
                 if (isset($decodedResponse->parameters)) {
                     $parameters = (is_object($decodedResponse->parameters)) ? json_encode($decodedResponse->parameters) : $decodedResponse->parameters;
@@ -186,7 +189,7 @@ class RestApi
      * @return bool
      * @throws \Exception
      */
-    protected function validateConfig()
+    protected function validateConfig(): bool
     {
         $missingConfig = [];
         if (! $this->getApiKey()) {
@@ -206,7 +209,7 @@ class RestApi
     /**
      * @param $handle
      */
-    protected function setDefaultOptions($handle)
+    protected function setDefaultOptions($handle): void
     {
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
     }
@@ -215,7 +218,7 @@ class RestApi
      * @param $handle
      * @param $dataArray
      */
-    protected function buildPostCall($handle, $dataArray)
+    protected function buildPostCall($handle, $dataArray): void
     {
         $dataJson = json_encode($dataArray);
         switch (json_last_error()) {
@@ -235,7 +238,7 @@ class RestApi
      * @param $handle
      * @param $dataArray
      */
-    protected function buildPutCall($handle, $dataArray)
+    protected function buildPutCall($handle, $dataArray): void
     {
         $this->buildPostCall($handle, $dataArray);
         curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -245,7 +248,7 @@ class RestApi
      * @param $handle
      * @param $dataArray
      */
-    protected function buildDeleteCall($handle, $dataArray)
+    protected function buildDeleteCall($handle, $dataArray): void
     {
         $this->buildPostCall($handle, $dataArray);
         curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'DELETE');
@@ -255,7 +258,7 @@ class RestApi
      * @param $handle
      * @param $dataArray
      */
-    protected function buildGetCall($handle, $dataArray)
+    protected function buildGetCall($handle, $dataArray): void
     {
         if (! empty($dataArray)) {
             $urlParameters = http_build_query($dataArray);
