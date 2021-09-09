@@ -10,10 +10,16 @@ This is a simple PHP SDK lib to easily create Rest API.
 
 ## Installation
 
-You can install the package via composer:
+1. Install it into your Magento 2 project with composer:
 
 ```bash
 composer require palpalani/magento2-rest-api-client
+```
+
+2. Enable module
+
+```bash
+bin/magento setup:upgrade
 ```
 
 ## Example usage
@@ -115,6 +121,14 @@ $dataArray = [
 
 $result = $service->call('products', $dataArray);
 var_dump($result);
+```
+
+## Testing
+
+### Unit Tests
+
+```bash
+vendor/bin/phpunit tests/unit
 ```
 
 ## Changelog
