@@ -1,4 +1,4 @@
-# Magento2 rest api
+# Magento2 rest api - Magento Module
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/palpalani/magento2-rest-api-client.svg?style=flat-square)](https://packagist.org/packages/palpalani/magento2-rest-api-client)
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/palpalani/magento-2-api/Check%20&%20fix%20styling?label=code%20style)](https://github.com/palpalani/magento-2-api/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
