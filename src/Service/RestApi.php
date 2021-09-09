@@ -158,7 +158,7 @@ class RestApi
 
         $response = ['response' => $response, 'code' => $code];
         $code = $response['code'];
-        $response = $response['response'];
+        $response = (string) $response['response'];
 
         if ((int) $code === 200) {
             return json_decode($response, true);
@@ -221,12 +221,10 @@ class RestApi
     protected function buildPostCall($handle, $dataArray): void
     {
         $dataJson = json_encode($dataArray);
-        switch (json_last_error()) {
-            case JSON_ERROR_UTF8:
-                $dataArray = $this->utf8ize($dataArray);
-                $dataJson = json_encode($dataArray);
-
-                break;
+        $i = json_last_error();
+        if ($i === JSON_ERROR_UTF8) {
+            $dataArray = $this->utf8ize($dataArray);
+            $dataJson = json_encode($dataArray);
         }
         curl_setopt($handle, CURLOPT_POSTFIELDS, $dataJson);
         curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'POST');
