@@ -161,7 +161,7 @@ class RestApi
         $response = (string) $response['response'];
 
         if ((int) $code === 200) {
-            return json_decode($response, true);
+            return json_decode($response, false);
         }
 
         if ((int) $code === 202) {
